@@ -1,0 +1,112 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "FirstName": "vasko da ",
+      "LastName": "gamaa",
+      "email": "vasko58@gmail.com",
+      "phone": "13-562352523-555",
+      "gender": "Male",
+      "age": "45"
+    },
+    {
+      "id": "2",
+      "FirstName": "rohit",
+      "LastName": "khan",
+      "email": "rogit@gmail.com",
+      "phone": "525325623562",
+      "gender": "Male",
+      "age": "45"
+    },
+    {
+      "id": "3",
+      "FirstName": "Riyat",
+      "LastName": "Riyat",
+      "email": "riyat@gmail.com",
+      "phone": "2323232323",
+      "gender": "Male",
+      "age": "22"
+    },
+    {
+      "id": "4",
+      "FirstName": "JONI",
+      "LastName": "JONI",
+      "email": "joni@gmail.com",
+      "phone": "23232323",
+      "gender": "Male",
+      "age": "40"
+    },
+    {
+      "id": "5",
+      "FirstName": "FARIA",
+      "LastName": "FARIA",
+      "email": "faria@gmail.com",
+      "phone": "12121212121",
+      "gender": "Female",
+      "age": "15"
+    },
+    {
+      "id": "6",
+      "FirstName": "robiul",
+      "LastName": "karim",
+      "email": "robiul@gmail.com",
+      "phone": "89565869568956",
+      "gender": "Male",
+      "age": "38"
+    },
+    {
+      "id": "7",
+      "FirstName": "KABIL",
+      "LastName": "kABIL",
+      "email": "kabil@gmail.com",
+      "phone": "7845784578",
+      "gender": "Male",
+      "age": "35"
+    },
+    {
+      "id": "8",
+      "FirstName": "Mustafa",
+      "LastName": "khan",
+      "email": "mustafa@gmail.com",
+      "phone": "2356235623",
+      "gender": "Male",
+      "age": "55"
+    },
+    {
+      "id": "9",
+      "FirstName": "Firoja",
+      "LastName": "mohammed",
+      "email": "firoj@gmail.com",
+      "phone": "54545454545",
+      "gender": "Female",
+      "age": "26"
+    },
+    {
+      "id": "10",
+      "FirstName": "Samsul",
+      "LastName": "Alam",
+      "email": "samsulalam1996@gmail.com",
+      "phone": "08167786956",
+      "gender": "Male",
+      "age": "28"
+    },
+    {
+      "id": "11",
+      "FirstName": "rimon",
+      "LastName": "khan",
+      "email": "rimon@gmail.com",
+      "phone": "5623562356",
+      "gender": "Male",
+      "age": "33"
+    },
+    {
+      "id": "13",
+      "FirstName": "Samsul",
+      "LastName": "Alam",
+      "age": "26",
+      "email": "samsulalam1996@gmail.com",
+      "phone": "08167786956",
+      "gender": "Male"
+    }
+  ]
+}
