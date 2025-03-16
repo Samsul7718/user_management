@@ -14,7 +14,7 @@ const Home = () => {
   // Delete user
   const handleDelete = (id) => {
     axios
-      .delete(`http://fe80::fbeb:9c93:643:7909%6:3000/users/${id}`)
+      .delete(`http://192.168.1.5:3000/users/${id}`)
       .then(() => {
         const updatedUsers = data.filter((u) => u.id !== id);
         const reassignedUsers = updatedUsers.map((user, index) => ({
@@ -24,10 +24,7 @@ const Home = () => {
         setData(reassignedUsers);
 
         // Update the db.json file with reassigned users
-        axios.update(
-          "http://fe80::fbeb:9c93:643:7909%6:3000/users",
-          reassignedUsers
-        );
+        axios.update("http://192.168.1.5:3000/users", reassignedUsers);
 
         console.log("User deleted", reassignedUsers);
       })
@@ -36,7 +33,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://fe80::fbeb:9c93:643:7909%6:3000/users")
+      .get("http://192.168.1.5:3000/users")
       .then((res) => {
         let manual = res?.data?.map((res) => ({
           ...res,

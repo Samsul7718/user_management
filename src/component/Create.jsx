@@ -35,7 +35,7 @@ const Create = () => {
 
     // First, get the existing users from db.json
     axios
-      .get("http://fe80::fbeb:9c93:643:7909%6:3000/users")
+      .get("http://192.168.1.5:3000/users")
       .then((res) => {
         const users = res.data;
         const newId =
@@ -45,10 +45,7 @@ const Create = () => {
         const newUser = { ...values, id: String(newId) };
 
         //  Post new user
-        return axios.post(
-          "http://fe80::fbeb:9c93:643:7909%6:3000/users",
-          newUser
-        );
+        return axios.post("http://192.168.1.5:3000/users", newUser);
       })
       .then(() => {
         navigate("/");
