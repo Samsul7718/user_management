@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+// import axiosInstance from "../axios.instant";
 
 const Create = () => {
   const [values, setValues] = useState({
@@ -35,7 +36,7 @@ const Create = () => {
 
     // First, get the existing users from db.json
     axios
-      .get("http://192.168.1.5:3000/users")
+      .get("http://localhost:3001/users")
       .then((res) => {
         const users = res.data;
         const newId =
@@ -45,7 +46,7 @@ const Create = () => {
         const newUser = { ...values, id: String(newId) };
 
         //  Post new user
-        return axios.post("http://192.168.1.5:3000/users", newUser);
+        return axios.post("http://localhost:3001/users", newUser);
       })
       .then(() => {
         navigate("/");

@@ -6,7 +6,7 @@
       "LastName": "gamaa",
       "age": "50",
       "email": "vasko58@gmail.com",
-      "phone": "13-562352523-555",
+      "phone": "13-562352523-550",
       "gender": "Male"
     },
     {
@@ -28,22 +28,13 @@
       "age": "22"
     },
     {
-      "id": "4",
-      "FirstName": "JONI",
-      "LastName": "JONI",
-      "email": "joni@gmail.com",
-      "phone": "23232323",
-      "gender": "Male",
-      "age": "40"
-    },
-    {
       "id": "5",
       "FirstName": "FARIA",
       "LastName": "FARIA",
+      "age": "25",
       "email": "faria@gmail.com",
-      "phone": "12121212121",
-      "gender": "Female",
-      "age": "15"
+      "phone": "12121212125",
+      "gender": "Female"
     },
     {
       "id": "6",
@@ -127,12 +118,12 @@
       "age": "28"
     },
     {
-      "id": "17",
-      "FirstName": "kalu",
-      "LastName": "Kaloo",
-      "age": "56",
-      "email": "kalu@gmail.com",
-      "phone": "12121212121212",
+      "id": "18",
+      "FirstName": "Samsul",
+      "LastName": "Alam",
+      "age": "87",
+      "email": "samsulalam1996@gmail.com",
+      "phone": "08167786956",
       "gender": "Male"
     }
   ]

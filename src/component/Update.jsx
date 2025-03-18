@@ -20,7 +20,7 @@ const Update = () => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.1.5:3000/users/${id}`)
+      .get(`http://localhost:3001/users/${id}`)
 
       .then((res) => {
         const user = res.data;
@@ -45,7 +45,7 @@ const Update = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://192.168.1.5:3000/users/${id}`, values)
+      .put(`http://localhost:3001/users/${id}`, values)
       .then(() => {
         navigate("/"); //
         window.location.reload();

@@ -5,6 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+// import axiosInstance from "../axios.instant";
 
 const paginationModel = { page: 0, pageSize: 5, pageCount: 3, rowCount: 30 };
 
@@ -14,7 +15,7 @@ const Home = () => {
   // Delete user
   const handleDelete = (id) => {
     axios
-      .delete(`http://192.168.1.5:3000/users/${id}`)
+      .delete(`http://localhost:3001/users/${id}`)
       .then(() => {
         const updatedUsers = data.filter((u) => u.id !== id);
         const reassignedUsers = updatedUsers.map((user, index) => ({
@@ -24,7 +25,7 @@ const Home = () => {
         setData(reassignedUsers);
 
         // Update the db.json file with reassigned users
-        axios.update("http://192.168.1.5:3000/users", reassignedUsers);
+        axios.update("/users", reassignedUsers);
 
         console.log("User deleted", reassignedUsers);
       })
@@ -33,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.1.5:3000/users")
+      .get("http://localhost:3001/users")
       .then((res) => {
         let manual = res?.data?.map((res) => ({
           ...res,
