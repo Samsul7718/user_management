@@ -15,34 +15,51 @@ const Home = () => {
   // Delete user
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:3001/users/${id}`)
+      .delete(
+        `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
+      )
       .then(() => {
         const updatedUsers = data.filter((u) => u.id !== id);
-        const reassignedUsers = updatedUsers.map((user, index) => ({
-          ...user,
-          id: (index + 1).toString(),
-        }));
-        setData(reassignedUsers);
-
-        // Update the db.json file with reassigned users
-        axios.update("/users", reassignedUsers);
-
-        console.log("User deleted", reassignedUsers);
+        setData(updatedUsers);
+        console.log("User deleted", updatedUsers);
       })
       .catch((err) => console.log(err));
   };
 
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
+  //     )
+  //     .then((res) => {
+  //       const data = res.data;
+  //       if (data) {
+  //         const manual = Object.keys(data).map((key) => ({
+  //           id: key,
+  //           ...data[key],
+  //           name: `${data[key].FirstName || ""} ${data[key].LastName || ""}`,
+  //         }));
+  //         setData(manual);
+  //       }
+  //     })
+  //     .catch((err) => console.error("Error fetching data:", err));
+  // }, []);
+
   useEffect(() => {
     axios
-      .get("http://localhost:3001/users")
+      .get(
+        "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
+      )
       .then((res) => {
-        let manual = res?.data?.map((res) => ({
-          ...res,
-          name: res?.FirstName + " " + res?.LastName,
-        }));
-        setData(manual);
+        if (res.data) {
+          const usersList = Object.entries(res.data).map(([key, user]) => ({
+            id: key, // Assign Firebase key as id
+            ...user,
+          }));
+          setData(usersList);
+        }
       })
-      .catch((err) => console.error("Error fetching data:", err));
+      .catch((err) => console.log(err));
   }, []);
 
   const columns = [
@@ -53,7 +70,7 @@ const Home = () => {
       renderCell: (params) =>
         params.api.getRowIndexRelativeToVisibleRows(params.id) + 1,
     },
-    { field: "id", headerName: "ID", width: 30, flex: 0 },
+    { field: "id", headerName: "ID", width: 200, flex: 0 },
     {
       field: "name",
       headerName: "Name",
@@ -101,12 +118,12 @@ const Home = () => {
       },
     },
 
-    { field: "email", headerName: "Email", width: 210, flex: 0 },
+    { field: "email", headerName: "Email", width: 200, flex: 0 },
     {
       field: "phone",
       headerName: "Mobile",
       type: "number",
-      width: 160,
+      width: 140,
       flex: 0,
     },
     {
@@ -177,7 +194,7 @@ const Home = () => {
           <div className="text-center justify-center text-2xl md:text-3xl font-bold py-4 text-black-200">
             List of Users
           </div>
-          <Paper sx={{ height: "80%", width: "90%" }}>
+          <Paper sx={{ height: "80%", width: "100%" }}>
             <DataGrid
               rows={data}
               columns={columns}

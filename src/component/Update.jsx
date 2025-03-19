@@ -18,22 +18,46 @@ const Update = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
+  //     )
+
+  //     .then((res) => {
+  //       const user = res.data;
+  //       console.log("Fetched user data:", user);
+  //       setValues({
+  //         id: user.id || "",
+  //         FirstName: user.FirstName || "",
+  //         LastName: user.LastName || "",
+  //         age: user.age || "",
+  //         email: user.email || "",
+  //         phone: user.phone || "",
+  //         gender: user.gender || "",
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [id]);
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/users/${id}`)
-
+      .get(
+        "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
+      )
       .then((res) => {
-        const user = res.data;
-        console.log("Fetched user data:", user);
-        setValues({
-          id: user.id || "",
-          FirstName: user.FirstName || "",
-          LastName: user.LastName || "",
-          age: user.age || "",
-          email: user.email || "",
-          phone: user.phone || "",
-          gender: user.gender || "",
-        });
+        if (res.data) {
+          const users = Object.entries(res.data).map(([key, user]) => ({
+            id: key, // Firebase-generated unique key
+            ...user,
+          }));
+          const foundUser = users.find((user) => user.id === id);
+          if (foundUser) {
+            setValues(foundUser);
+          } else {
+            console.log("User not found");
+          }
+        }
       })
       .catch((err) => console.log(err));
   }, [id]);
@@ -42,15 +66,36 @@ const Update = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .put(
+  //       `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`,
+  //       values
+  //     )
+  //     .then(() => {
+  //       navigate("/"); //
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!values.id) {
+      console.error("Error: User ID is missing.");
+      return;
+    }
+
     axios
-      .put(`http://localhost:3001/users/${id}`, values)
+      .put(
+        `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${values.id}.json`,
+        values
+      )
       .then(() => {
-        navigate("/"); //
-        window.location.reload();
+        navigate("/"); // Redirect to home
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Error updating user:", err));
   };
 
   return (

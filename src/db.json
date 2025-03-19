@@ -1,33 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "FirstName": "vasko da ",
-      "LastName": "gamaa",
-      "age": "50",
-      "email": "vasko58@gmail.com",
-      "phone": "13-562352523-550",
-      "gender": "Male"
-    },
-    {
-      "id": "2",
-      "FirstName": "rohit",
-      "LastName": "khan",
-      "email": "rogit@gmail.com",
-      "phone": "525325623562",
-      "gender": "Male",
-      "age": "45"
-    },
-    {
-      "id": "3",
-      "FirstName": "Riyat",
-      "LastName": "Riyat",
-      "email": "riyat@gmail.com",
-      "phone": "2323232323",
-      "gender": "Male",
-      "age": "22"
-    },
-    {
       "id": "5",
       "FirstName": "FARIA",
       "LastName": "FARIA",
@@ -124,6 +97,15 @@
       "age": "87",
       "email": "samsulalam1996@gmail.com",
       "phone": "08167786956",
+      "gender": "Male"
+    },
+    {
+      "id": "19",
+      "FirstName": "Riyat",
+      "LastName": "Riyat",
+      "age": "35",
+      "email": "riyat@gmail.com",
+      "phone": "52525252525256",
       "gender": "Male"
     }
   ]

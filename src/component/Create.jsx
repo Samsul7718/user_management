@@ -34,25 +34,46 @@ const Create = () => {
     }
     setValues({ name: "", email: "", phone: "", gender: "" });
 
-    // First, get the existing users from db.json
+    // Firebase Realtime Database URL
+    const firebaseUrl =
+      "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json";
+
+    // Post new user data to Firebase
     axios
-      .get("http://localhost:3001/users")
-      .then((res) => {
-        const users = res.data;
-        const newId =
-          users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
-
-        // Create new user with the next ID
-        const newUser = { ...values, id: String(newId) };
-
-        //  Post new user
-        return axios.post("http://localhost:3001/users", newUser);
-      })
+      .post(firebaseUrl, values) // Firebase auto-generates unique IDs
       .then(() => {
+        setValues({
+          FirstName: "",
+          LastName: "",
+          email: "",
+          phone: "",
+          gender: "",
+          age: "",
+        });
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error("Error posting data:", err));
   };
+
+  // First, get the existing users from db.json
+  //   axios
+  //     .get("http://localhost:3001/users")
+  //     .then((res) => {
+  //       const users = res.data;
+  //       const newId =
+  //         users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
+
+  //       // Create new user with the next ID
+  //       const newUser = { ...values, id: String(newId) };
+
+  //       //  Post new user
+  //       return axios.post("http://localhost:3001/users", newUser);
+  //     })
+  //     .then(() => {
+  //       navigate("/");
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-600">
