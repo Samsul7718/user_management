@@ -1,5 +1,7 @@
 import { Button } from "@mui/material";
-import axios from "axios";
+// import axios from "axios";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebaseinit";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -18,84 +20,34 @@ const Update = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
-  //     )
-
-  //     .then((res) => {
-  //       const user = res.data;
-  //       console.log("Fetched user data:", user);
-  //       setValues({
-  //         id: user.id || "",
-  //         FirstName: user.FirstName || "",
-  //         LastName: user.LastName || "",
-  //         age: user.age || "",
-  //         email: user.email || "",
-  //         phone: user.phone || "",
-  //         gender: user.gender || "",
-  //       });
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [id]);
-
   useEffect(() => {
-    axios
-      .get(
-        "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
-      )
-      .then((res) => {
-        if (res.data) {
-          const users = Object.entries(res.data).map(([key, user]) => ({
-            id: key, // Firebase-generated unique key
-            ...user,
-          }));
-          const foundUser = users.find((user) => user.id === id);
-          if (foundUser) {
-            setValues(foundUser);
-          } else {
-            console.log("User not found");
-          }
+    const fetchUser = async () => {
+      try {
+        const response = await getDoc(doc(db, "users", id));
+        if (response.exists()) {
+          setValues(response.data());
         }
-      })
-      .catch((err) => console.log(err));
+      } catch (error) {
+        console.error(error);
+        setError("User not found!");
+      }
+    };
+    fetchUser();
   }, [id]);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .put(
-  //       `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`,
-  //       values
-  //     )
-  //     .then(() => {
-  //       navigate("/"); //
-  //       window.location.reload();
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!values.id) {
-      console.error("Error: User ID is missing.");
-      return;
+    try {
+      await updateDoc(doc(db, "users", id), values);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      setError("Something went wrong!");
     }
-
-    axios
-      .put(
-        `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${values.id}.json`,
-        values
-      )
-      .then(() => {
-        navigate("/"); // Redirect to home
-      })
-      .catch((err) => console.log("Error updating user:", err));
   };
 
   return (

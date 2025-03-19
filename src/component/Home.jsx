@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-// import axiosInstance from "../axios.instant";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebaseinit";
 
 const paginationModel = { page: 0, pageSize: 5, pageCount: 3, rowCount: 30 };
 
@@ -13,54 +14,50 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   // Delete user
-  const handleDelete = (id) => {
-    axios
-      .delete(
-        `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
-      )
-      .then(() => {
-        const updatedUsers = data.filter((u) => u.id !== id);
-        setData(updatedUsers);
-        console.log("User deleted", updatedUsers);
-      })
-      .catch((err) => console.log(err));
+  // const handleDelete = (id) => {
+  //   axios
+  //     .delete(
+  //       `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
+  //     )
+  //     .then(() => {
+  //       const updatedUsers = data.filter((u) => u.id !== id);
+  //       setData(updatedUsers);
+  //       console.log("User deleted", updatedUsers);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  // Delete user
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "users", id));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
+      setData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+    return () => unsub();
+  }, []);
   // useEffect(() => {
   //   axios
   //     .get(
   //       "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
   //     )
   //     .then((res) => {
-  //       const data = res.data;
-  //       if (data) {
-  //         const manual = Object.keys(data).map((key) => ({
-  //           id: key,
-  //           ...data[key],
-  //           name: `${data[key].FirstName || ""} ${data[key].LastName || ""}`,
+  //       if (res.data) {
+  //         const usersList = Object.entries(res.data).map(([key, user]) => ({
+  //           id: key, // Assign Firebase key as id
+  //           ...user,
   //         }));
-  //         setData(manual);
+  //         setData(usersList);
   //       }
   //     })
-  //     .catch((err) => console.error("Error fetching data:", err));
+  //     .catch((err) => console.log(err));
   // }, []);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
-      )
-      .then((res) => {
-        if (res.data) {
-          const usersList = Object.entries(res.data).map(([key, user]) => ({
-            id: key, // Assign Firebase key as id
-            ...user,
-          }));
-          setData(usersList);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const columns = [
     {

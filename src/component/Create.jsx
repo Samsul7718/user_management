@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-// import axiosInstance from "../axios.instant";
+import { addDoc, collection } from "firebase/firestore";
+// import axios from "axios";
+import { db } from "../firebaseinit";
 
 const Create = () => {
   const [values, setValues] = useState({
@@ -26,7 +27,7 @@ const Create = () => {
     return /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email); // Only Gmail validation
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateEmail(values.email)) {
       setError("Only Gmail addresses are allowed!");
@@ -34,46 +35,16 @@ const Create = () => {
     }
     setValues({ name: "", email: "", phone: "", gender: "" });
 
-    // Firebase Realtime Database URL
-    const firebaseUrl =
-      "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json";
-
-    // Post new user data to Firebase
-    axios
-      .post(firebaseUrl, values) // Firebase auto-generates unique IDs
-      .then(() => {
-        setValues({
-          FirstName: "",
-          LastName: "",
-          email: "",
-          phone: "",
-          gender: "",
-          age: "",
-        });
+    // First, get the existing users from db.json
+    try {
+      const response = await addDoc(collection(db, "users"), values);
+      if (response.id) {
         navigate("/");
-      })
-      .catch((err) => console.error("Error posting data:", err));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  // First, get the existing users from db.json
-  //   axios
-  //     .get("http://localhost:3001/users")
-  //     .then((res) => {
-  //       const users = res.data;
-  //       const newId =
-  //         users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
-
-  //       // Create new user with the next ID
-  //       const newUser = { ...values, id: String(newId) };
-
-  //       //  Post new user
-  //       return axios.post("http://localhost:3001/users", newUser);
-  //     })
-  //     .then(() => {
-  //       navigate("/");
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-600">
