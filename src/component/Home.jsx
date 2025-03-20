@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import axios from "axios";
 import { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
@@ -12,20 +11,6 @@ const paginationModel = { page: 0, pageSize: 5, pageCount: 3, rowCount: 30 };
 
 const Home = () => {
   const [data, setData] = useState([]);
-
-  // Delete user
-  // const handleDelete = (id) => {
-  //   axios
-  //     .delete(
-  //       `https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users/${id}.json`
-  //     )
-  //     .then(() => {
-  //       const updatedUsers = data.filter((u) => u.id !== id);
-  //       setData(updatedUsers);
-  //       console.log("User deleted", updatedUsers);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   // Delete user
   const handleDelete = async (id) => {
@@ -42,22 +27,6 @@ const Home = () => {
     });
     return () => unsub();
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://user-data-ce182-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
-  //     )
-  //     .then((res) => {
-  //       if (res.data) {
-  //         const usersList = Object.entries(res.data).map(([key, user]) => ({
-  //           id: key, // Assign Firebase key as id
-  //           ...user,
-  //         }));
-  //         setData(usersList);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   const columns = [
     {

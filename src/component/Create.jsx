@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
-// import axios from "axios";
 import { db } from "../firebaseinit";
 
 const Create = () => {
@@ -35,7 +34,7 @@ const Create = () => {
     }
     setValues({ name: "", email: "", phone: "", gender: "" });
 
-    // First, get the existing users from db.json
+    // First, get the existing users from database
     try {
       const response = await addDoc(collection(db, "users"), values);
       if (response.id) {

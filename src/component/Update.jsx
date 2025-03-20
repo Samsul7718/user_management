@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-// import axios from "axios";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebaseinit";
 import React, { useEffect, useState } from "react";
